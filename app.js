@@ -4,7 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var cors = require('cors');
+
+// managers
+var FileManager = require('./manager/FileManager');
+var fileManager;
 
 var index = require('./routes/index');
 
@@ -27,6 +32,20 @@ app.use(session({
 // CORS configuration
 app.use(cors())
 
+var init = async () => {
+  fileManager = new FileManager();
+  await fileManager.init();
+}
+
+mongoose.connect('mongodb://jupiteruser:jupiterpwd0@ds019876.mlab.com:19876/jupiter', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.set('debug', true)
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connextion error:'));
+db.once('open', () => {
+  console.log('MongoDB Connected!')
+  init();
+});
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -36,6 +55,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', (req, res, next) => {
+  req.fileManager = fileManager;
   next();
 }, index);
 
