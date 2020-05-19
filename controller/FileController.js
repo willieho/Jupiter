@@ -1,4 +1,4 @@
-var writeFile = require('../helper/fileSystemHelper');
+var { writeFile } = require('../helper/fileSystemHelper');
 
 class FileController {
 

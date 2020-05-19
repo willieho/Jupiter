@@ -1,4 +1,6 @@
 var express = require('express');
+var { DIRECTORY_NAME, FILE_TYPE } = require('../helper/fileSystemHelper');
+var path = require('path');
 var router = express.Router();
 var FileController = require('../controller/FileController');
 var fileController;
@@ -40,6 +42,15 @@ router.put('/updateFile', async (req, res, next) => {
 
   res.send('OK');
 });
+
+/* Download */
+router.get('/download/:fileName', (req, res) => {
+  res.download(path.join(__dirname, '../' + DIRECTORY_NAME + '/' + req.params.fileName + FILE_TYPE), (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+})
 
 let getFileController = async (fileManager) => {
   if (fileController && fileController !== 'null' && fileController !== 'undefined') {

@@ -1,6 +1,6 @@
 class File {
 
-    // props = {_id, name, content}
+    // props = {_id, name, content, createdAt, updatedAt}
     constructor(fileObject) {
         for (var prop in fileObject) {
             this[prop] = fileObject[prop]

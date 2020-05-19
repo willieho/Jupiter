@@ -28,7 +28,9 @@
                             <i class="material-icons filIcon" style="font-size:35px; color:#1175da">insert_drive_file</i>
                         </td>
                         <td>
-                            <h4><%= file.name %></h4>
+                            <a href="/download/<%= file.name %>">
+                                <h4><%= file.name %></h4>
+                            </a>
                         </td>
                         <td>
                             <button id="editButton" class="btn btn-warning btn-sm" onclick="redirect('./edit/<%= file._id %>')">Edit</button>
