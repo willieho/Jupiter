@@ -19,6 +19,11 @@ class FileController {
         this.fileManager.updateFile(fileId, updatedContent);
         // TODO: update to disk
     }
+
+    getFileById = fileId => {
+        console.log("controller: ", fileId);
+        return this.fileManager.getFileById(fileId);
+    }
 }
 
 module.exports = FileController;

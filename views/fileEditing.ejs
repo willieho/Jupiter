@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Jupiter</title>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.waypoints.min.js"></script>
+    <script src="../js/jquery.stellar.min.js"></script>
+    <script src="../js/hoverIntent.js"></script>
+    <script src="../js/superfish.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.easing.1.3.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+
+    <form class="container">
+        <div class="form-group">
+            <label class="form-control-label">File Name:</label>
+            <label class="form-control-label"><h3><%= file.name %></h3></label>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">File content</label>
+            <textarea id="fileContent" class="form-control" id="message" rows="8" placeholder="Content"><%= file.content %></textarea>
+        </div>
+        <div>
+            <button id="saveButton" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+
+    <script>
+        $("#saveButton").click(function () {
+            $.ajax({
+                method: "PUT",
+                contentType: "application/json; charset=utf-8",
+                url: "/updateFile",
+                data: JSON.stringify(
+                    {
+                        _id: $(this).data("file._id"),
+                        content: $('#fileContent').val()
+                    }
+                )
+            }).done(function (msg) {
+                document.location.reload();
+            });
+        });
+    </script>
+</body>
+
+</html>

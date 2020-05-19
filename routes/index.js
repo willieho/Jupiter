@@ -28,16 +28,18 @@ router.get('/view', async (req, res, next) => {
 
 /* Edit page */
 
-// router.get('/edit/:fileId', (req, res, next) => {
-//   let fileController = new FileController(await req.fileManager);
-//   let file = fileController.getMovieInfo(req.params.movieId);
-//   res.render('fileEditing', { movie: movie, reviews: reviews, user: getUserInfo(req) });
-// });
+router.get('/edit/:fileId', async (req, res, next) => {
+  let controller = await getFileController(req.fileManager);
+  let file = controller.getFileById(req.params.fileId);
+
+  console.log("route: ", file);
+  res.render('fileEditing', { file: file });
+});
 
 router.put('/updateFile', async (req, res, next) => {
-  let fileController = new FileController(await req.fileManager);
-  // await fileController.updateFile(req.body._id, req.body.content);
-  await fileController.updateFile("5ec2b4e282b46c5913dddc50", "this is updated content");
+  let controlelr = await getFileController(req.fileManager);
+  // await controller.updateFile(req.body._id, req.body.content);
+  await controller.updateFile("5ec2b4e282b46c5913dddc50", "this is updated content");
 
   res.send('OK');
 });

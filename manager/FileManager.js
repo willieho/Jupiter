@@ -75,9 +75,9 @@ class FileManager {
     // utils
 
     getFileById = fileId => {
-        this.fileList.filter(file => {
+        return this.fileList.filter(file => {
             return file._id.equals(fileId);
-        })
+        })[0]
     }
 
     getFileIds = () => {
