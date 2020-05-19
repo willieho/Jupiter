@@ -5,7 +5,8 @@ var fileSchema = new Schema({
     name: String,
     content: String
 }, {
-    collection: 'File'
+    collection: 'File',
+    timestamps: true
 });
 
 module.exports = mongoose.model('File', fileSchema);

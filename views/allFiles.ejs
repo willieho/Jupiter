@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Jupiter</title>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.waypoints.min.js"></script>
+    <script src="../js/jquery.stellar.min.js"></script>
+    <script src="../js/hoverIntent.js"></script>
+    <script src="../js/superfish.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.easing.1.3.js"></script>
+    <script src="../js/main.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+    <div class="col-md-6">
+        <table class="table">
+            <tbody>
+                <% for (file of fileList) { %>
+                <tr>
+                    <td>
+                        <i class="material-icons filIcon" style="font-size:35px; color:#1175da">insert_drive_file</i>
+                    </td>
+                    <td>
+                        <h4><%= file.name %></h4>
+                    </td>
+                    <td>
+                        <button id="submitButton" class="btn btn-warning btn-sm">Edit</button>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $("#submitButton").click(function () {
+            if ($("#fileName").val() === "") {
+                return;
+            }
+            // if ($.trim($("#fileName").val()) === "") {
+            // 	return;
+            // }
+            $.ajax({
+                method: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/enterFile",
+                data: JSON.stringify(
+                    {
+                        name: $('#fileName').val(),
+                        content: $('#fileContent').val()
+                    }
+                )
+            }).done(function (msg) {
+                document.location.reload();
+            });
+        });
+		// $("#submitButton").click(function () {
+		// 	// if ($("#fileName").val() === "") {
+		// 	// 	return;
+		// 	// }
+		// 	// if ($.trim($("#fileName").val()) === "") {
+		// 	// 	return;
+		// 	// }
+		// 	$.ajax({
+		// 		method: "PUT",
+		// 		contentType: "application/json; charset=utf-8",
+		// 		url: "/updateFile",
+		// 		data: JSON.stringify(
+		// 			{
+		// 				_id: "5ec2b4e282b46c5913dddc50",
+		// 				content: "this is updated content"
+		// 			}
+		// 		)
+		// 	}).done(function (msg) {
+		// 		document.location.reload();
+		// 	});
+		// });
+    </script>
+</body>
+
+</html>

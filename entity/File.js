@@ -1,6 +1,6 @@
 class File {
 
-    // props = {id, name, content}
+    // props = {_id, name, content}
     constructor(fileObject) {
         for (var prop in fileObject) {
             this[prop] = fileObject[prop]
@@ -9,6 +9,14 @@ class File {
 
     getContent = () => {
         return this.content;
+    }
+
+    getObject = () => {
+        return {
+            _id: this._id,
+            name: this.name,
+            content: this.content
+        }
     }
 }
 

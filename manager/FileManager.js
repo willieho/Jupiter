@@ -17,26 +17,34 @@ class FileManager {
         await this.generateFileList();
     }
 
+    getFileList = () => {
+        return this.fileList;
+    }
+
     generateFileList = async () => {
-        const fileObjects = await FileModel.find();
+        this.fileList = [];
+        const fileObjects = await FileModel.find().sort({createdAt: -1});
         for (var fileObject of fileObjects) {
             this.fileList.push(new File(fileObject));
         }
-        console.log('finish to load files from database');
+        console.log('> finish to load files from database');
     }
 
-    getFileIds = () => {
-        this.fileList.map(file => {
-            return file._id;
-        })
-    }
-
-    getObject = () => {
-        return {
-            _id: this._id,
-            name: this.name,
-            content: this.content
+    fetchNewFiles = async () => {
+        if (this.fileList === undefined || this.fileList.length == 0) {
+            await this.generateFileList();
+            return;
         }
+        const fileObjects = await FileModel.find({
+            createdAt: {
+                $gte: new Date(this.fileList[0].createdAt)
+            }
+        });
+        fileObjects.shift();
+        for (var fileObject of fileObjects) {
+            this.fileList.unshift(new File(fileObject));
+        }
+        console.log('> finish to fetch files from database');
     }
 
     insertFile = async (fileName, fileContent) => {
@@ -49,11 +57,33 @@ class FileManager {
         console.log('> file has been inserted successfully');
     }
 
+    updateFile = async (fileId, updatedContent) => {
+        var fileObject = this.getFileById(fileId).getObject();
+        console.log(fileObject);
+        console.log(fileId);
+        fileObject.content = updatedContent;
+        await FileModel.findByIdAndUpdate(fileObject._id, fileObject).exec();
+    }
+
     fetchData = async (url, callback) => {
         await fetch(url)
             .then(response => response.json())
             .then(json => callback(null, json))
             .catch(error => callback(error, null))
+    }
+
+    // utils
+
+    getFileById = fileId => {
+        this.fileList.filter(file => {
+            return file._id.equals(fileId);
+        })
+    }
+
+    getFileIds = () => {
+        this.fileList.map(file => {
+            return file._id;
+        })
     }
 }
 
