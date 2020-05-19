@@ -21,7 +21,9 @@
     <form class="container">
         <div class="form-group">
             <label class="form-control-label">File Name:</label>
-            <label class="form-control-label"><h3><%= file.name %></h3></label>
+            <label class="form-control-label">
+                <h3><%= file.name %></h3>
+            </label>
         </div>
         <div class="form-group">
             <label class="form-control-label">File content</label>
@@ -40,12 +42,12 @@
                 url: "/updateFile",
                 data: JSON.stringify(
                     {
-                        _id: $(this).data("file._id"),
+                        _id: "<%= file._id %>",
                         content: $('#fileContent').val()
                     }
                 )
             }).done(function (msg) {
-                document.location.reload();
+                location.href = "../view";
             });
         });
     </script>

@@ -37,6 +37,8 @@ var init = async () => {
   await fileManager.init();
 }
 
+// Connect to mLab
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://jupiteruser:jupiterpwd0@ds019876.mlab.com:19876/jupiter', { useNewUrlParser: true, useUnifiedTopology: true });
 // mongoose.set('debug', true)
 var db = mongoose.connection;

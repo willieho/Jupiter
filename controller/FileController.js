@@ -21,7 +21,6 @@ class FileController {
     }
 
     getFileById = fileId => {
-        console.log("controller: ", fileId);
         return this.fileManager.getFileById(fileId);
     }
 }

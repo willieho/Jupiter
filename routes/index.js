@@ -31,15 +31,12 @@ router.get('/view', async (req, res, next) => {
 router.get('/edit/:fileId', async (req, res, next) => {
   let controller = await getFileController(req.fileManager);
   let file = controller.getFileById(req.params.fileId);
-
-  console.log("route: ", file);
   res.render('fileEditing', { file: file });
 });
 
 router.put('/updateFile', async (req, res, next) => {
-  let controlelr = await getFileController(req.fileManager);
-  // await controller.updateFile(req.body._id, req.body.content);
-  await controller.updateFile("5ec2b4e282b46c5913dddc50", "this is updated content");
+  let controller = await getFileController(req.fileManager);
+  await controller.updateFile(req.body._id, req.body.content);
 
   res.send('OK');
 });

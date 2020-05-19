@@ -58,11 +58,11 @@ class FileManager {
     }
 
     updateFile = async (fileId, updatedContent) => {
-        var fileObject = this.getFileById(fileId).getObject();
-        console.log(fileObject);
-        console.log(fileId);
-        fileObject.content = updatedContent;
+        var file = this.getFileById(fileId);
+        file.content = updatedContent;
+        let fileObject = file.getObject();
         await FileModel.findByIdAndUpdate(fileObject._id, fileObject).exec();
+        console.log('> file has been updated successfully');
     }
 
     fetchData = async (url, callback) => {
