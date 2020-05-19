@@ -36,7 +36,7 @@ router.get('/edit/:fileId', async (req, res, next) => {
 
 router.put('/updateFile', async (req, res, next) => {
   let controller = await getFileController(req.fileManager);
-  await controller.updateFile(req.body._id, req.body.content);
+  await controller.updateFile(req.body._id, req.body.name, req.body.content);
 
   res.send('OK');
 });

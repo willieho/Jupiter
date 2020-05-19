@@ -18,24 +18,26 @@
 </head>
 
 <body>
-    <div class="col-md-6">
-        <table class="table">
-            <tbody>
-                <% for (file of fileList) { %>
-                <tr>
-                    <td>
-                        <i class="material-icons filIcon" style="font-size:35px; color:#1175da">insert_drive_file</i>
-                    </td>
-                    <td>
-                        <h4><%= file.name %></h4>
-                    </td>
-                    <td>
-                        <button id="editButton" class="btn btn-warning btn-sm" onclick="redirect('./edit/<%= file._id %>')">Edit</button>
-                    </td>
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
+    <div class="container text-center">
+        <div class="col-md-12">
+            <table class="table">
+                <tbody>
+                    <% for (file of fileList) { %>
+                    <tr>
+                        <td>
+                            <i class="material-icons filIcon" style="font-size:35px; color:#1175da">insert_drive_file</i>
+                        </td>
+                        <td>
+                            <h4><%= file.name %></h4>
+                        </td>
+                        <td>
+                            <button id="editButton" class="btn btn-warning btn-sm" onclick="redirect('./edit/<%= file._id %>')">Edit</button>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>

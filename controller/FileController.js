@@ -1,3 +1,5 @@
+var writeFile = require('../helper/fileSystemHelper');
+
 class FileController {
 
     constructor(fileManager) {
@@ -11,13 +13,20 @@ class FileController {
     
     enterFile = async (name, content) => {
         await this.fileManager.insertFile(name, content);
-
-        // TODO: write to disk
+        // write to disk
+        writeFile(name, content, (err) => {
+            if (err) throw err;
+            console.log('> Write File to Disk.');
+        });
     }
 
-    updateFile = async (fileId, updatedContent) => {
+    updateFile = async (fileId, name, updatedContent) => {
         this.fileManager.updateFile(fileId, updatedContent);
-        // TODO: update to disk
+        // update to disk
+        writeFile(name, updatedContent, (err) => {
+            if (err) throw err;
+            console.log('> Update File to Disk.');
+        });
     }
 
     getFileById = fileId => {
