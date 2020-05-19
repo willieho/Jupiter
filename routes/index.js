@@ -43,10 +43,10 @@ router.put('/updateFile', async (req, res, next) => {
 
 let getFileController = async (fileManager) => {
   if (fileController && fileController !== 'null' && fileController !== 'undefined') {
-    console.log("return here!");
     return fileController;
   }
-  return new FileController(await fileManager);
+  fileController = new FileController(await fileManager)
+  return fileController;
 }
 
 module.exports = router;
