@@ -40,7 +40,6 @@ router.get('/edit/:fileId', async (req, res, next) => {
     if (reply !== 1) {
       redisClient.setnx(key, clientKey, (err, reply) => { 
         if (reply === 1) {
-          console.log('Lock Acquired');
           redisClient.expire(key, 30);
         }
       });
@@ -51,28 +50,8 @@ router.get('/edit/:fileId', async (req, res, next) => {
   let file = controller.getFileById(req.params.fileId);
   res.render('fileEditing', { file: file, clientKey: clientKey });
 });
-/*
-router.put('/updateFile', async (req, res, next) => {
-  console.log("================updatefile================");
-  let redisClient = await req.redisClient;
-  let controller = await getFileController(req.fileManager);
-  await redisClient.get(getRedisKeyWithId(req.body._id), (err, replay) => {
-    if (replay && replay !== req.body.clientKey) {
-      res.sendStatus(403);
-      console.log("================end of updatefile 403================");
-    }
-    "================end of getkey================"
-  });
-  controller.updateFile(req.body._id, req.body.name, req.body.content).then(resolve => {
-    res.sendStatus(200);
-    console.log("================end of updatefile================");
-  });
-  console.log("================end of updatefile function================");
-});
-*/
 
 router.put('/updateFile', async (req, res, next) => {
-  console.log("================updatefile================");
   let redisClient = await req.redisClient;
   let controller = await getFileController(req.fileManager);
   const redisKey = getRedisKeyWithId(req.body._id);
@@ -81,13 +60,10 @@ router.put('/updateFile', async (req, res, next) => {
       controller.updateFile(req.body._id, req.body.name, req.body.content);
       // unlock
       redisClient.del(redisKey, function (err, reply) {
-        console.log("* Remove Redis Key *");
       });
       res.sendStatus(200);
-      console.log("================end of updatefile================");
     } else {
       res.sendStatus(403);
-      console.log("================end of updatefile else================");
     }
   });
 });
@@ -104,21 +80,15 @@ router.get('/download/:fileName', (req, res) => {
 /* Lock */
 // unlock when leaving Edit page
 router.post('/unlock', async (req, res) => {
-  console.log("==================unlock===================");
   let redisClient = await req.redisClient;
   const redisKey = getRedisKeyWithId(req.body._id);
   await redisClient.get(redisKey, (err, replay) => {
-    console.log('unlock replay', replay);
-    console.log('unlock clientKey', req.body.clientKey);
     if (replay === req.body.clientKey) {
       redisClient.del(redisKey, function (err, reply) {
-        console.log("* Remove Redis Key *");
         res.send('OK');
-        console.log("==================end of unlock===================");
       });
     } else {
       res.send('OK');
-      console.log("==================end of unlock else===================");
     }
   });
 });

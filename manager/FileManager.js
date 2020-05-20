@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var FileModel = require('../mongoDB/model/FileModel');
 var File = require('../entity/File');
-var fetch = require('node-fetch');
 
 class FileManager {
 
@@ -63,13 +62,6 @@ class FileManager {
         let fileObject = file.getObject();
         await FileModel.findByIdAndUpdate(fileObject._id, fileObject).exec();
         console.log('> file has been updated successfully');
-    }
-
-    fetchData = async (url, callback) => {
-        await fetch(url)
-            .then(response => response.json())
-            .then(json => callback(null, json))
-            .catch(error => callback(error, null))
     }
 
     // utils

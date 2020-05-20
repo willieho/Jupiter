@@ -29,19 +29,6 @@ class FileController {
         });
     }
 
-    // updateFile = async (fileId, name, updatedContent) => {
-    //     await this.fileManager.updateFile(fileId, updatedContent);
-    //     // update to disk
-    //     let promise = new Promise(resolve => {
-    //         writeFile(name, updatedContent, (err) => {
-    //             if (err) throw err;
-    //             console.log('> Update File to Disk.');
-    //             resolve();
-    //         });
-    //     });
-    //     return promise;
-    // }
-
     getFileById = fileId => {
         return this.fileManager.getFileById(fileId);
     }

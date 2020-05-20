@@ -46,7 +46,7 @@
 				url: "/enterFile",
 				data: JSON.stringify(
 					{
-						name: $('#fileName').val(),
+						name: $('#fileName').val().trim(),
 						content: $('#fileContent').val()
 					}
 				)

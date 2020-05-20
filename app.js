@@ -8,14 +8,6 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 const redis = require("redis");
 const redisClient = redis.createClient();
-const { promisify } = require('util');
-const lock = promisify(require('redis-lock')(redisClient));
-const getAsync = promisify(redisClient.get).bind(redisClient);
-
-lock("myLock", function (done) {
-  // Simulate a 1 second long operation
-  setTimeout(done, 1000);
-});
 
 // managers
 var FileManager = require('./manager/FileManager');
@@ -27,12 +19,8 @@ var app = express();
 
 // setup redis
 redisClient.on('connect', function () {
-  console.log('Redis connected!');
+  console.log('Redis Connected!');
 });
-
-// test redis
-// redisClient.set("key", "this is key 1", redis.print);
-// redisClient.get("key", redis.print);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -78,7 +66,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', (req, res, next) => {
   req.fileManager = fileManager;
   req.redisClient = redisClient;
-  req.getAsync = getAsync;
   next();
 }, index);
 
