@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
 const redis = require("redis");
-const redisClient = redis.createClient();
+const redisClient = redis.createClient("redis://h:p345a102d6c7cfd4ddb87ba40a7e8d42d80c5f91c779c3ce29ef4797acd62c47d@ec2-52-21-199-125.compute-1.amazonaws.com:7179");
 
 // managers
 var FileManager = require('./manager/FileManager');
