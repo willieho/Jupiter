@@ -18,6 +18,10 @@ var index = require('./routes/index');
 var app = express();
 
 // setup redis
+redisClient.on('error', function (err) {
+  console.log('Please Run Redis Server First.');
+  throw err; 
+})
 redisClient.on('connect', function () {
   console.log('Redis Connected!');
 });

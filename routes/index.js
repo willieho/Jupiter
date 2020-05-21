@@ -5,6 +5,7 @@ var router = express.Router();
 var FileController = require('../controller/FileController');
 var fileController;
 const crypto = require('crypto');
+const REDIS_TTL = 60;
 
 /* New page */
 router.get('/', async function(req, res, next) {
@@ -15,9 +16,9 @@ router.get('/new', (req, res, next) => {
   res.redirect('/');
 });
 
-router.post('/enterFile', async (req, res, next) => {
+router.post('/createFile', async (req, res, next) => {
   let controller = await getFileController(req.fileManager);
-  await controller.enterFile(req.body.name, req.body.content);
+  await controller.createFile(req.body.name, req.body.content);
 
   res.send('OK');
 });
@@ -40,7 +41,7 @@ router.get('/edit/:fileId', async (req, res, next) => {
     if (reply !== 1) {
       redisClient.setnx(key, clientKey, (err, reply) => { 
         if (reply === 1) {
-          redisClient.expire(key, 30);
+          redisClient.expire(key, REDIS_TTL);
         }
       });
     }

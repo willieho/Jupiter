@@ -11,7 +11,7 @@ class FileController {
         return this.fileManager.getFileList();
     }
     
-    enterFile = async (name, content) => {
+    createFile = async (name, content) => {
         await this.fileManager.insertFile(name, content);
         // write to disk
         writeFile(name, content, (err) => {
