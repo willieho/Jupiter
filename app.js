@@ -7,8 +7,17 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
 const redis = require("redis");
-const redisClient = redis.createClient("redis://h:p345a102d6c7cfd4ddb87ba40a7e8d42d80c5f91c779c3ce29ef4797acd62c47d@ec2-52-21-199-125.compute-1.amazonaws.com:7179");
+var redisClient;
+var dbURL;
 
+if (process.env.NODE_ENV == 'local') {
+  redisClient = redis.createClient();
+  dbURL = 'mongodb://jupiteruser:jupiterpwd0@ds123003.mlab.com:23003/jupiter_local';
+} else {
+  redisClient = redis.createClient("redis://h:p345a102d6c7cfd4ddb87ba40a7e8d42d80c5f91c779c3ce29ef4797acd62c47d@ec2-52-21-199-125.compute-1.amazonaws.com:7179");
+  dbURL = 'mongodb://jupiteruser:jupiterpwd0@ds019876.mlab.com:19876/jupiter';
+}
+ 
 // managers
 var FileManager = require('./manager/FileManager');
 var fileManager;
@@ -50,7 +59,7 @@ var init = async () => {
 
 // Connect to mLab
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://jupiteruser:jupiterpwd0@ds019876.mlab.com:19876/jupiter', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true });
 // mongoose.set('debug', true)
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
