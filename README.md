@@ -25,6 +25,8 @@ Project is created with:
 Browser is tested with:
 * Google Chrome Version `83.0.4103.61`
 
+**Note**: Please use Chrome to test since I didn't handle events properly from other browsers like Safari.
+
 ## Runnable Cloud Platform
 
 [Heroku page](https://jupitersdk.herokuapp.com/)
