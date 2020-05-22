@@ -4,7 +4,7 @@
 
 * `GET /` or `GET /new`: Default page for saving file.
 * `GET /view`: Show all the text files previously submitted.
-    * clicking the file name will trigger browser to download the file.
+    * Clicking the file name will trigger browser to download the file.
     * Edit a previously submitted text file with `Edit` button by its side.
 * Lock implemented using Redis.
 
@@ -25,6 +25,6 @@ Project is created with:
 Browser is tested with:
 * Google Chrome Version `83.0.4103.61`
 
-## Runable Cloud Platform
+## Runnable Cloud Platform
 
 [Heroku page](https://jupitersdk.herokuapp.com/)
